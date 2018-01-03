@@ -1,6 +1,6 @@
 {
-    "name": "asil/otus/home_task_1_1",
-    "description": "otus home_task_1_1",
+    "name": "asil/otus/home-task-1.1",
+    "description": "otus home-task-1.1",
     "type": "project",
     "require": {
         "php": ">=7.2"
