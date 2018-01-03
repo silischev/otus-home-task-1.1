@@ -2,6 +2,11 @@
     "name": "asil/otus/home-task-1.1",
     "description": "otus home-task-1.1",
     "type": "project",
+    "authors": [
+        {
+          "name": "Anton Silischev"
+        }
+    ],
     "require": {
         "php": ">=7.2"
     },
