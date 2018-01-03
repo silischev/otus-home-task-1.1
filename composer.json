@@ -1,0 +1,15 @@
+{
+    "name": "asil/otus/home_task_1_1",
+    "description": "otus home_task_1_1",
+    "type": "project",
+    "require": {
+        "php": ">=7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Asil\\Otus\\HomeTask_1_1\\": "src/"
+        }
+    },
+    "license": "mit",
+    "minimum-stability": "stable"
+}
