@@ -11,7 +11,6 @@ class SimpleBracketsProcessor
     const BRACKET_CLOSE = ')';
 
     private $_line;
-    private $_specialCharacters;
 
     /**
      * SimpleBracketsProcessor constructor.
@@ -20,12 +19,11 @@ class SimpleBracketsProcessor
      */
     public function __construct(string $line)
     {
-        $this->_specialCharacters = ['\\t', '\\n', '\\r', ' ', chr(13), chr(10)];
-        $this->_line = str_replace($this->_specialCharacters, '', $line);
-
-        if (empty($this->_line)) {
-            throw new LengthException('The line of the characters cannot be empty');
+        if (empty($line)) {
+            throw new \LengthException('The line of the characters cannot be empty');
         }
+
+        $this->_line = $this->purifyingLine($line);
     }
 
     /**
@@ -55,13 +53,24 @@ class SimpleBracketsProcessor
     }
 
     /**
+     * Purifying string from valid special characters
+     * @param string $line
+     * @return string
+     */
+    public function purifyingLine(string $line)
+    {
+        $specialCharacters = ['\\t', '\\n', '\\r', ' ', chr(13), chr(10)];
+        return str_replace($specialCharacters, '', $line);
+    }
+
+    /**
      * @param string $character
      * @throws \InvalidArgumentException
      */
     private function characterValidation(string $character): void
     {
         if ($character !== self::BRACKET_OPEN && $character !== self::BRACKET_CLOSE) {
-            throw new InvalidArgumentException("The line contains invalid character '{$character}'");
+            throw new \InvalidArgumentException("The line contains invalid character '{$character}'");
         }
     }
 }
