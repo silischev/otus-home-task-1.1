@@ -57,7 +57,7 @@ class SimpleBracketsProcessor
      * @param string $line
      * @return string
      */
-    public function purifyingLine(string $line)
+    private function purifyingLine(string $line)
     {
         $specialCharacters = ['\\t', '\\n', '\\r', ' ', chr(13), chr(10)];
         return str_replace($specialCharacters, '', $line);
