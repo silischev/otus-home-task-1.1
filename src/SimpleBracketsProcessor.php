@@ -2,6 +2,8 @@
 
 namespace Asil\Otus\HomeTask_1_1;
 
+use Asil\Otus\HomeTask_1_1\Helpers\CleanLineHelper;
+
 /**
  * Class SimpleBracketsProcessor
  */
@@ -10,32 +12,24 @@ class SimpleBracketsProcessor
     const BRACKET_OPEN = '(';
     const BRACKET_CLOSE = ')';
 
-    private $_line;
-
     /**
-     * SimpleBracketsProcessor constructor.
      * @param string $line
+     * @return bool
      * @throws \LengthException
      */
-    public function __construct(string $line)
+    public function isValidBracketLine(string $line): bool
     {
+        $line = CleanLineHelper::clean($line);
+
         if (empty($line)) {
             throw new \LengthException('The line of the characters cannot be empty');
         }
 
-        $this->_line = $this->purifyingLine($line);
-    }
-
-    /**
-     * @return bool
-     */
-    public function processBracketLine(): bool
-    {
-        $charactersArr = str_split($this->_line);
-        $lineLength = sizeof($charactersArr);
+        $charactersArr = str_split($line);
         $openBracketsCounter = 0;
+        $invalidLine = false;
 
-        for ($i = 0; $i < $lineLength; $i++) {
+        for ($i = 0, $lineLength = count($charactersArr); $i < $lineLength; $i++) {
             $this->characterValidation($charactersArr[$i]);
 
             if ($charactersArr[$i] === self::BRACKET_OPEN) {
@@ -44,23 +38,13 @@ class SimpleBracketsProcessor
                 if ($openBracketsCounter > 0 && $charactersArr[$i] === self::BRACKET_CLOSE) {
                     $openBracketsCounter--;
                 } else {
-                    return false;
+                    $invalidLine = true;
+                    break;
                 }
             }
         }
 
-        return $openBracketsCounter === 0 ? true : false;
-    }
-
-    /**
-     * Purifying string from valid special characters
-     * @param string $line
-     * @return string
-     */
-    private function purifyingLine(string $line)
-    {
-        $specialCharacters = ['\\t', '\\n', '\\r', ' ', chr(13), chr(10)];
-        return str_replace($specialCharacters, '', $line);
+        return $openBracketsCounter === 0 && !$invalidLine ? true : false;
     }
 
     /**

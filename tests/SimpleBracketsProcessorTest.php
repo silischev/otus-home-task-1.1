@@ -8,30 +8,46 @@ class SimpleBracketsProcessorTest extends TestCase
 {
     /**
      * @dataProvider validData
+     * @param $string
+     * @param $returnValue
      */
     public function testValid($string, $returnValue)
     {
-        $bracketsProcessor = new SimpleBracketsProcessor($string);
-        $this->assertSame($returnValue, $bracketsProcessor->processBracketLine());
+        $bracketsProcessor = new SimpleBracketsProcessor();
+        $this->assertSame($returnValue, $bracketsProcessor->isValidBracketLine($string));
     }
 
     /**
      * @dataProvider invalidData
+     * @param $string
+     * @param $returnValue
      */
     public function testInvalid($string, $returnValue)
     {
-        $bracketsProcessor = new SimpleBracketsProcessor($string);
-        $this->assertSame($returnValue, $bracketsProcessor->processBracketLine());
+        $bracketsProcessor = new SimpleBracketsProcessor();
+        $this->assertSame($returnValue, $bracketsProcessor->isValidBracketLine($string));
     }
 
     /**
      * @dataProvider invalidDataWithExceptions
+     * @param $string
      */
     public function testInvalidWithExceptions($string)
     {
         $this->expectException(\InvalidArgumentException::class);
-        $bracketsProcessor = new SimpleBracketsProcessor($string);
-        $bracketsProcessor->processBracketLine();
+        $bracketsProcessor = new SimpleBracketsProcessor();
+        $bracketsProcessor->isValidBracketLine($string);
+    }
+
+    /**
+     * @dataProvider emptyDataWithExceptions
+     * @param $string
+     */
+    public function testEmptyWithExceptions($string)
+    {
+        $this->expectException(\LengthException::class);
+        $bracketsProcessor = new SimpleBracketsProcessor();
+        $bracketsProcessor->isValidBracketLine($string);
     }
 
     public function validData()
@@ -61,6 +77,16 @@ class SimpleBracketsProcessorTest extends TestCase
         return [
             ['(((z)())'],
             ['((d)'],
+        ];
+    }
+
+    public function emptyDataWithExceptions()
+    {
+        return [
+            [''],
+            ['
+            '],
+            ['  ']
         ];
     }
 }

@@ -11,6 +11,6 @@ Usage example:
 use Asil\Otus\HomeTask_1_1\SimpleBracketsProcessor;
   
 $line = '(())';
-$processor = new SimpleBracketsProcessor($line);
-$processor->processBracketLine();
+$processor = new SimpleBracketsProcessor();
+$processor->isValidBracketLine($line);
 ```
